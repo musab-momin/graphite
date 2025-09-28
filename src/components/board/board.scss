@@ -8,7 +8,18 @@
 .board-svg {
     width: 100%;
     height: 100%;
-    cursor: grab;
+
+    &--cursor_grab {
+        cursor: grab;
+    }
+
+    &--cursor_pointer {
+        cursor: default;
+    }
+
+    &--rectangle {
+        cursor: crosshair;
+    }
 }
 
 .board-type-selector {

@@ -1,0 +1,35 @@
+@import "@/styles/variables";
+
+.tools-container {
+    height: 48px;
+    padding-block: 4px;
+    padding-inline: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    background: $white-clr;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    & .tools-btn {
+        cursor: pointer;
+        transition: background 300ms ease-in-out;
+        border-radius: 4px;
+        height: 100%;
+
+        &:hover {
+            background: $active-clr;
+        }
+
+        &--active {
+            background: $active-clr;
+        }
+    }
+}
