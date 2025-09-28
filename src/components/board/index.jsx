@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import "@/components/board/board.scss";
+import BoardType from "@/components/board-type";
 import { BOARD_TYPES } from "@/utils/constants";
+import "@/components/board/board.scss";
 
 const Board = () => {
   const [viewport, setViewport] = useState({
@@ -108,25 +109,7 @@ const Board = () => {
           </g>
         </svg>
       </div>
-      <div className="board-type-selector">
-        <select
-          name="board-type"
-          value={mode}
-          onChange={() =>
-            setMode((currMode) =>
-              currMode === BOARD_TYPES.IVORY_BOARD
-                ? BOARD_TYPES.ASTRA_BOARD
-                : BOARD_TYPES.IVORY_BOARD
-            )
-          }
-        >
-          {Object.values(BOARD_TYPES).map((type) => (
-            <option key={type} value={type}>
-              {type.split("_")[0].toLowerCase()}
-            </option>
-          ))}
-        </select>
-      </div>
+      <BoardType type={mode} changeType={(md) => setMode(md)} />
     </>
   );
 };
