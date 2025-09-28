@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "@/components/board/board.scss";
+import { BOARD_TYPES } from "@/utils/constants";
 
 const Board = () => {
   const [viewport, setViewport] = useState({
@@ -7,6 +8,8 @@ const Board = () => {
     y: 0, // translateY
     scale: 1, // zoom factor
   });
+
+  const [mode, setMode] = useState(BOARD_TYPES.IVORY_BOARD);
 
   const svgRef = useRef(null);
   const isDragging = useRef(false);
@@ -74,29 +77,57 @@ const Board = () => {
   }, []);
 
   return (
-    <div className="board-container">
-      <svg ref={svgRef} className="board-svg" width="100%" height="100%">
-        <defs>
-          <pattern
-            id="dot-grid"
-            x="0"
-            y="0"
-            width="20"
-            height="20"
-            patternUnits="userSpaceOnUse"
+    <>
+      <div className="board-container">
+        <svg ref={svgRef} className="board-svg" width="100%" height="100%">
+          {mode === BOARD_TYPES.ASTRA_BOARD ? (
+            <>
+              <defs>
+                <pattern
+                  id="dot-grid"
+                  x="0"
+                  y="0"
+                  width="20"
+                  height="20"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <circle cx="1" cy="1" r="1" fill="#ccc" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="#FFFFFF" />
+              <rect width="100%" height="100%" fill="url(#dot-grid)" />
+            </>
+          ) : (
+            <rect width="100%" height="100%" fill="#FFFFFF" />
+          )}
+          <g
+            transform={`translate(${viewport.x}, ${viewport.y}) scale(${viewport.scale})`}
           >
-            <circle cx="1" cy="1" r="1" fill="#ccc" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#dot-grid)" />
-        <g
-          transform={`translate(${viewport.x}, ${viewport.y}) scale(${viewport.scale})`}
+            <circle cx="200" cy="200" r="50" fill="tomato" />
+            <rect x="500" y="500" width="150" height="150" fill="lightblue" />
+          </g>
+        </svg>
+      </div>
+      <div className="board-type-selector">
+        <select
+          name="board-type"
+          value={mode}
+          onChange={() =>
+            setMode((currMode) =>
+              currMode === BOARD_TYPES.IVORY_BOARD
+                ? BOARD_TYPES.ASTRA_BOARD
+                : BOARD_TYPES.IVORY_BOARD
+            )
+          }
         >
-          <circle cx="200" cy="200" r="50" fill="tomato" />
-          <rect x="500" y="500" width="150" height="150" fill="lightblue" />
-        </g>
-      </svg>
-    </div>
+          {Object.values(BOARD_TYPES).map((type) => (
+            <option key={type} value={type}>
+              {type.split("_")[0].toLowerCase()}
+            </option>
+          ))}
+        </select>
+      </div>
+    </>
   );
 };
 
